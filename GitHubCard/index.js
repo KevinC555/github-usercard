@@ -20,6 +20,22 @@ axios.get(`https://api.github.com/users/KevinC555`).then(res => {
   STEP 4: Pass the data received from Github into your function,
 	and append the returned markup to the DOM as a child of .cards
 */
+const entryPoint = document.querySelector('.cards');
+
+function githubUser() {
+	axios.get(`https://api.github.com/users/KevinC555`).then(res => {
+		console.log(res);
+
+		const card = createUserCard(res.data);
+		entryPoint.appendChild(card);
+
+	})
+		.catch(err => {
+			console.error(err);
+		})
+}
+githubUser();
+githubUser();
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -54,7 +70,8 @@ const followersArray = [];
 	</div>
 */
 
-function object(argument) {
+function createUserCard(user) {
+	console.log(user);
 	const card = document.createElement('div');
 	const image = document.createElement('img');
 	const cardInfo = document.createElement('div');
@@ -67,21 +84,35 @@ function object(argument) {
 	const following = document.createElement('p');
 	const bio = document.createElement('p');
 
-	card.appendChild('image');
-	card.appendChild('cardInfo');
-	cardInfo.appendChild('heading');
-	cardInfo.appendChild('userName');
-	cardInfo.appendChild('location');
-	cardInfo.appendChild('profile');
-	profile.appendChild('address');
-	cardInfo.appendChild('followers');
-	cardInfo.appendChild('following');
-	cardInfo.appendChild('bio');
+	card.appendChild(image);
+	card.appendChild(cardInfo);
+	cardInfo.appendChild(heading);
+	cardInfo.appendChild(userName);
+	cardInfo.appendChild(location);
+	cardInfo.appendChild(profile);
+	profile.appendChild(address);
+	cardInfo.appendChild(followers);
+	cardInfo.appendChild(following);
+	cardInfo.appendChild(bio);
 
 	card.classList.add('card');
 	cardInfo.classList.add('card-info');
 	heading.classList.add('name');
 	userName.classList.add('username');
+
+
+	heading.textContent = user.login;
+	image.src = user.avatar_url;
+	location.textContent = user.location;
+	followers.textContent = user.followers;
+	following.textContent = user.following;
+
+
+
+
+
+	return card;
+
 
 }
 
